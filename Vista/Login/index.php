@@ -1,5 +1,6 @@
-<?php include_once ('../../configuracion.php');
-      include_once ('../Estructura/header.php');
+<?php 
+include_once ('../../configuracion.php');
+include_once ('../Estructura/header.php');
    
 
 $title = 'Iniciar sesion';
@@ -13,8 +14,8 @@ $data = data_submitted();
     <img class="mb-4" src="../img/logo.png" alt="logo" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Iniciar sesión</h1>
 
-    <form class="needs-validation" data-toggle="loginValidator" id="form-login" novalidate action="validarLogin.php" method="post">
-      <div class="form-group">
+    <form class="needs-validation" data-toggle="loginValidator" id="form-login" novalidate  method="post">
+      <div class="form-group mb-3">
         <div class="input-group">
           <div class="input-group w-100">
             <span id="basic-addon1" class="input-group-text">
@@ -27,7 +28,7 @@ $data = data_submitted();
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group mb-3">
         <div class="input-group">
           <div class="input-group w-100">
             <span id="basic-addon1" class="input-group-text">
@@ -43,13 +44,13 @@ $data = data_submitted();
       
 
 
-      <button class="btn btn-primary btn-block mt-4" onclick="codificar()" type="submit"><?php if ($objSession->validar()){ ?>Cambiar de usuario<?php }else { ?>Iniciar sesión<?php } ?></button>
+      <button class="btn btn-primary btn-block mt-4" type="submit" id="enviar"><?php if ($objSession->validar()){ ?>Cambiar de usuario<?php }else { ?>Iniciar sesión<?php } ?></button>
 
     </form>
   </div>
 
 </div>
-<button class="btn btn-primary btn-block mt-4" onclick="cod()" type="submit"><?php if ($objSession->validar()){ ?>Cambiar de usuario<?php }else { ?>Iniciar sesión<?php } ?></button>
+<!-- <button class="btn btn-primary btn-block mt-4" onclick="cod()" type="submit"><?php if ($objSession->validar()){ ?>Cambiar de usuario<?php }else { ?>Iniciar sesión<?php } ?></button> -->
 
 <?php
 if (array_key_exists("error", $data) && $data["error"] == 1) {
@@ -64,11 +65,58 @@ if (array_key_exists("error", $data) && $data["error"] == 2) {
       </div>";
 } ?>
 
+<div id='resp' class="justify-content-center align-items-center  mt-5" style="display:none">
+<!-- usuario y/o contraseña es incorrecto -->
+<div class='alert alert-danger w-25 mx-auto d-flex justify-content-center align-items-center  mt-5' role='alert'>
+usuario y/o contraseña es incorrecto
+</div>
+</div>
+
 <script type="text/javascript">
-  var pass = document.getElementById('uspass');
+  /* var pass = document.getElementById('uspass');
   function codificar(){
     var code = md5(pass.value);
    // pass.value = code;
 
-  }
+  } */
+  $(document).ready(function(){
+      $('#form-login').submit(function(e){
+        console.log("buuuuenas");
+        const datos = {
+          usnombre: $('#usnombre').val(),
+          uspass: CryptoJS.MD5($('#uspass').val()).toString()
+        };
+        $.post(
+          'validarLogin_copy.php',
+          datos,
+          function(respuesta){
+            /* var result = JSON.stringify(respuesta);
+            var resultado = JSON.parse(result); */
+            console.log(respuesta);
+            //$("#resp").html(respuesta);
+            /* if(resultado.exito=="1"){
+              document.location.href = "paginaSegura.php";
+            }else{
+              $('#resp').html("usuario y/o contraseña es incorrecto");
+            } */
+            mostrarResp(respuesta);
+          },"json"
+        );
+        
+        e.preventDefault();
+      });
+    });
+
+    function mostrarResp(respuesta){
+
+      console.log("respuesta2");
+      if(respuesta.exito=="1"){
+        document.location.href = "paginaSegura.php";
+      }else{
+        //$('#resp').html("usuario y/o contraseña es incorrecto");
+        $('#resp').show('4000');
+      }
+    }
+
+
 </script>

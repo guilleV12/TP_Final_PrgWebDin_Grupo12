@@ -17,7 +17,9 @@ class Session{
         $obj = new AbmUsuario();
         $param['usnombre']=$nombreUsuario;
         $param['uspass']=$psw;
-        $param['usdeshabilitado']='null';
+        
+        /* Primera validacion */
+       /*  $param['usdeshabilitado']='null';
 
         $resultado = $obj->buscar(null);
         for ($i=0; $i < count($resultado); $i++) { 
@@ -32,7 +34,21 @@ class Session{
             $resp = true;
         } else {
             $this->cerrar();
+        } */
+
+        /*  segunda validacion */
+        $listar = $obj->buscar($param);
+        if(count($listar)>0){
+            $objUsuario = $listar[0];
+            if($objUsuario->getUsDeshabilitado() == null || $objUsuario->getUsDeshabilitado() == "0000-00-00 00:00:00" ){
+                $_SESSION['idusuario']=$objUsuario->getIdUsuario();
+                $_SESSION['usnombre']=$param['usnombre'];
+                /* $_SESSION['rol'] = $this->getRol(); */
+                $resp = true;
+            }
         }
+
+
         return $resp;
     }
     

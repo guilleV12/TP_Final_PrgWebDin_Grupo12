@@ -17,6 +17,12 @@ $title = "TP final";
     <link rel="stylesheet" href="../Css/bootstrap-5.1.3-dist/css/bootstrap-reboot.css">
     <!-- JS validator -->
     <script src="../Js/validator.js" type="text/javascript"></script>
+
+    <!-- MD5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
+
+
     <!-- JQuery easyui -->
     <link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.6.6/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.6.6/themes/icon.css">

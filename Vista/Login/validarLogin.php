@@ -21,6 +21,7 @@
             if ($objSession->validar() == true){
                 $_SESSION['rol'] = $objSession->getRol()->getRoDescripcion();
                 header('Location:paginaSegura.php');
+                
             }
         }else{
             $objSession->iniciar($datos['usnombre'],$datos['uspass']);
