@@ -1,0 +1,7 @@
+{
+    "require": {
+        "fzaninotto/faker": "^1.5",
+        "menarasolutions/geographer": "^0.3.13",
+        "menarasolutions/geographer-es": "^0.1.0"
+    }
+}
